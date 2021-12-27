@@ -5,14 +5,18 @@ go 1.17
 require (
 	github.com/asim/go-micro/plugins/registry/etcd/v3 v3.7.0
 	github.com/asim/go-micro/plugins/server/grpc/v3 v3.7.0
+	github.com/asim/go-micro/plugins/wrapper/breaker/hystrix/v3 v3.7.0
+	github.com/asim/go-micro/plugins/wrapper/ratelimiter/uber/v3 v3.7.0
 	github.com/asim/go-micro/v3 v3.7.0
-	github.com/shanlongpan/micro-v3-pub v0.0.0-20211222105605-166f0471ba41
+	github.com/shanlongpan/micro-v3-pub v0.0.0-20211223065626-80373e428673
 )
 
 require (
 	github.com/Microsoft/go-winio v0.5.0 // indirect
 	github.com/ProtonMail/go-crypto v0.0.0-20210428141323-04723f9f07d7 // indirect
 	github.com/acomagu/bufpipe v1.0.3 // indirect
+	github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5 // indirect
+	github.com/andres-erbsen/clock v0.0.0-20160526145045-9e14626cd129 // indirect
 	github.com/asim/go-micro/plugins/registry/etcd/v4 v4.0.0-20211221131829-7af0eb4b7ab7 // indirect
 	github.com/asim/go-micro/plugins/server/grpc/v4 v4.0.0-20211221131829-7af0eb4b7ab7 // indirect
 	github.com/bitly/go-simplejson v0.5.0 // indirect
@@ -49,6 +53,7 @@ require (
 	go.etcd.io/etcd/client/v3 v3.5.0 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
+	go.uber.org/ratelimit v0.2.0 // indirect
 	go.uber.org/zap v1.17.0 // indirect
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a // indirect
 	golang.org/x/net v0.0.0-20211020060615-d418f374d309 // indirect

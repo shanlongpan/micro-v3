@@ -8,25 +8,25 @@ package handler
 import (
 	"context"
 	"github.com/asim/go-micro/v3/util/log"
-	helloworld "github.com/shanlongpan/micro-v3-pub/idl/micro-grpc"
+	"github.com/shanlongpan/micro-v3-pub/idl/grpc/microv3"
 )
 
-type HelloWorld struct{}
+type Microv3 struct{}
 
 // Call is a single request handler called via client.Call or the generated client code
-func (e *HelloWorld) Call(ctx context.Context, req *helloworld.Request, rsp *helloworld.Response) error {
-	log.Info("Received helloworld.Call request")
+func (e *Microv3) Call(ctx context.Context, req *microv3.CallRequest, rsp *microv3.CallResponse) error {
+	log.Info("Received Microv3.Call request")
 	rsp.Msg = "Hello " + req.Name
 	return nil
 }
 
 // Stream is a server side stream handler called via client.Stream or the generated client code
-func (e *HelloWorld) Stream(ctx context.Context, req *helloworld.StreamingRequest, stream helloworld.Helloworld_StreamStream) error {
-	log.Infof("Received helloworld.Stream request with count: %d", req.Count)
+func (e *Microv3) Stream(ctx context.Context, req *microv3.StreamingRequest, stream microv3.MicroV3Service_StreamStream) error {
+	log.Infof("Received Microv3.Stream request with count: %d", req.Count)
 
 	for i := 0; i < int(req.Count); i++ {
 		log.Infof("Responding: %d", i)
-		if err := stream.Send(&helloworld.StreamingResponse{
+		if err := stream.Send(&microv3.StreamingResponse{
 			Count: int64(i),
 		}); err != nil {
 			return err
@@ -37,14 +37,14 @@ func (e *HelloWorld) Stream(ctx context.Context, req *helloworld.StreamingReques
 }
 
 // PingPong is a bidirectional stream handler called via client.Stream or the generated client code
-func (e *HelloWorld) PingPong(ctx context.Context, stream helloworld.Helloworld_PingPongStream) error {
+func (e *Microv3) PingPong(ctx context.Context, stream microv3.MicroV3Service_PingPongStream) error {
 	for {
 		req, err := stream.Recv()
 		if err != nil {
 			return err
 		}
 		log.Infof("Got ping %v", req.Stroke)
-		if err := stream.Send(&helloworld.Pong{Stroke: req.Stroke}); err != nil {
+		if err := stream.Send(&microv3.Pong{Stroke: req.Stroke}); err != nil {
 			return err
 		}
 	}

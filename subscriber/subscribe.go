@@ -8,17 +8,17 @@ package subscriber
 import (
 	"context"
 	"github.com/asim/go-micro/v3/util/log"
-	helloworld "github.com/shanlongpan/micro-v3-pub/idl/micro-grpc"
+	"github.com/shanlongpan/micro-v3-pub/idl/grpc/microv3"
 )
 
-type Apollo struct{}
+type Subscribe struct{}
 
-func (e *Apollo) Handle(ctx context.Context, msg *helloworld.Message) error {
+func (e *Subscribe) Handle(ctx context.Context, msg *microv3.Message) error {
 	log.Info("Handler Received message: ", msg.Say)
 	return nil
 }
 
-func Handler(ctx context.Context, msg *helloworld.Message) error {
+func Handler(ctx context.Context, msg *microv3.Message) error {
 	log.Info("Function Received message: ", msg.Say)
 	return nil
 }
