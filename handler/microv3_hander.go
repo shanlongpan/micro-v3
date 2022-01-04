@@ -7,6 +7,8 @@ package handler
 
 import (
 	"context"
+	"fmt"
+	"github.com/asim/go-micro/v3/metadata"
 	"github.com/asim/go-micro/v3/util/log"
 	"github.com/shanlongpan/micro-v3-pub/idl/grpc/microv3"
 )
@@ -16,7 +18,8 @@ type Microv3 struct{}
 // Call is a single request handler called via client.Call or the generated client code
 func (e *Microv3) Call(ctx context.Context, req *microv3.CallRequest, rsp *microv3.CallResponse) error {
 	log.Info("Received Microv3.Call request")
-	rsp.Msg = "Hello " + req.Name
+	traceId, _ := metadata.Get(ctx, "trace_id")
+	rsp.Msg = fmt.Sprintf("name %s trace_id %s", req.Name, traceId)
 	return nil
 }
 

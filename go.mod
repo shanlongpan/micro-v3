@@ -5,7 +5,6 @@ go 1.17
 require (
 	github.com/asim/go-micro/plugins/registry/etcd/v3 v3.7.0
 	github.com/asim/go-micro/plugins/server/grpc/v3 v3.7.0
-	github.com/asim/go-micro/plugins/wrapper/breaker/hystrix/v3 v3.7.0
 	github.com/asim/go-micro/plugins/wrapper/ratelimiter/uber/v3 v3.7.0
 	github.com/asim/go-micro/v3 v3.7.0
 	github.com/shanlongpan/micro-v3-pub v0.0.0-20211223065626-80373e428673
@@ -19,6 +18,8 @@ require (
 	github.com/andres-erbsen/clock v0.0.0-20160526145045-9e14626cd129 // indirect
 	github.com/asim/go-micro/plugins/registry/etcd/v4 v4.0.0-20211221131829-7af0eb4b7ab7 // indirect
 	github.com/asim/go-micro/plugins/server/grpc/v4 v4.0.0-20211221131829-7af0eb4b7ab7 // indirect
+	github.com/asim/go-micro/plugins/wrapper/breaker/hystrix/v3 v3.7.0 // indirect
+	github.com/asim/go-micro/plugins/wrapper/select/shard/v3 v3.7.0 // indirect
 	github.com/bitly/go-simplejson v0.5.0 // indirect
 	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/coreos/go-systemd/v22 v22.3.2 // indirect

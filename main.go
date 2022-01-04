@@ -6,14 +6,16 @@ package main
 
 import (
 	"github.com/asim/go-micro/plugins/registry/etcd/v3"
-	"github.com/asim/go-micro/plugins/wrapper/ratelimiter/uber/v3"
+	"github.com/asim/go-micro/plugins/server/grpc/v3"
+	ratelimit "github.com/asim/go-micro/plugins/wrapper/ratelimiter/uber/v3"
 	"github.com/asim/go-micro/v3"
 	"github.com/asim/go-micro/v3/registry"
+	"github.com/asim/go-micro/v3/server"
 	"github.com/asim/go-micro/v3/util/log"
 	"github.com/shanlongpan/micro-v3-pub/idl/grpc/microv3"
+	"github.com/shanlongpan/micro-v3/consts"
 	"github.com/shanlongpan/micro-v3/handler"
 	"github.com/shanlongpan/micro-v3/subscriber"
-	"time"
 )
 
 func main() {
@@ -21,16 +23,17 @@ func main() {
 	reg := etcd.NewRegistry(registry.Addrs("http://127.0.0.1:2377", "http://127.0.0.1:2378", "http://127.0.0.1:2379"))
 
 	service := micro.NewService(
-		micro.Name("micro-v3-learn"),
-		micro.Version("latest"),
-		micro.RegisterTTL(10*time.Second),
-		micro.RegisterInterval(5*time.Second),
-		micro.WrapHandler(ratelimit.NewHandlerWrapper(1000)), // 限流1000每s,
-		micro.Registry(reg),
-		//micro.Server(grpc.NewServer()),
+		micro.Server(
+			grpc.NewServer(
+				server.Name("micro-v3-learn"),
+				server.Registry(reg),
+				server.Version("latest")),
+		),
+	)
+	service.Init(
+		micro.WrapHandler(ratelimit.NewHandlerWrapper(consts.RateLimit)), // 针对单个服务限流1000每s,如果多台，能相应的请求数*N
 	)
 
-	service.Init()
 	// Register Handler
 	err := microv3.RegisterMicroV3ServiceHandler(service.Server(), new(handler.Microv3))
 	if err != nil {
@@ -38,7 +41,7 @@ func main() {
 		return
 	}
 	// Register Struct as Subscriber  可以不注册
-	err = micro.RegisterSubscriber("palfish.com.service.apollo", service.Server(), new(subscriber.Subscribe))
+	err = micro.RegisterSubscriber("micro-v3-learn-subscribe", service.Server(), new(subscriber.Subscribe))
 	if err != nil {
 		log.Errorf("sub fail %s", err.Error())
 		return
